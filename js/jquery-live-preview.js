@@ -30,12 +30,13 @@
          
          var defaults = {
              trigger: 'hover',
-             targetWidth : 1000,
-             targetHeight: 800,
+             targetWidth : 300,
+             targetHeight: 200,
              viewWidth: 300,
              viewHeight: 200,
-             position: 'right',
-             positionOffset: 40,
+             scale: '1.0', 
+             position: 'top',
+             positionOffset: 50,
          };
 
          var options = $.extend(defaults, options);
@@ -97,7 +98,8 @@
              }
              
              //hover on 
-             $('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><iframe id="livepreview_iframe" src="' + href + '" style="height:' + options.targetHeight + 'px; width:' + options.targetWidth + 'px;-moz-transform: scale('+ s + ');-moz-transform-origin: 0 0;-o-transform: scale('+ s + ');-o-transform-origin: 0 0;-webkit-transform: scale('+ s + ');-webkit-transform-origin: 0 0;"></iframe></div></div>');
+             $('body,html').addClass('stop-scrolling');
+             $('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><iframe id="livepreview_iframe" src="' + href + '" style="height:' + options.targetHeight + 'px; width:' + options.targetWidth + 'px;-moz-transform: scale('+ s + ');-moz-transform-origin: 0 0;-o-transform: scale('+ s + ');-o-transform-origin: 0 0;-webkit-transform: scale('+ s + ');-webkit-transform-origin: 0 0;-ms-transform: scale(' + s + ',' + s + ');-ms-transform-origin: 0 0;"></iframe></div></div>');
              $('#' + preview_id).fadeIn(100);
          };
 
@@ -121,6 +123,8 @@
             
             obj.on(triggerType, null, { triggerType: triggerType, target: obj, href: href, scale: s }, showPreview);
             obj.on('mouseleave', function() {
+                        
+                $('body,html').removeClass('stop-scrolling');
                 $('#' + preview_id).remove();
             });
 
