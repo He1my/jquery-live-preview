@@ -41,14 +41,6 @@
 
          var options = $.extend(defaults, options);
 
-         if(obj.attr("data-target-width"))
-             targetWidth = obj.attr("data-target-width");
-         if(obj.attr("data-target-height"))
-             targetHeight = obj.attr("data-target-height");
-         if(obj.attr("data-view-width"))
-             viewWidth = obj.attr("data-view-width");
-         if(obj.attr("data-view-height"))
-             viewHeight = obj.attr("data-view-height");
                  
          //calculate appropriate scaling based on width.                 
          var scale_w = (options.viewWidth / options.targetWidth);
@@ -90,6 +82,15 @@
 
              if(obj.attr("data-scale"))
                  s = obj.attr("data-scale");
+
+             if(obj.attr("data-target-width"))
+                 targetWidth = obj.attr("data-target-width");
+             if(obj.attr("data-target-height"))
+                 targetHeight = obj.attr("data-target-height");
+             if(obj.attr("data-view-width"))
+                 viewWidth = obj.attr("data-view-width");
+             if(obj.attr("data-view-height"))
+                 viewHeight = obj.attr("data-view-height");
 
              var pos = $(this).offset();
              var width = $(this).width();
