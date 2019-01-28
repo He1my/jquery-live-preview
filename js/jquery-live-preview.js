@@ -1,8 +1,8 @@
 /* ==========================================================
  * jquery-live-preview.js v1.1.0
- * https://github.com/alanphoon/jquery-live-preview
+ * https://github.com/He1my/jquery-live-preview
  * ==========================================================
- * Copyright 2015 Alan Phoon, www.ampedupdesigns.com
+ * Copyright 2015 Alan Phoon, Helmy M www.ampedupdesigns.com
  * The MIT License
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,7 +40,17 @@
          };
 
          var options = $.extend(defaults, options);
-         //calculate appropriate scaling based on width.
+
+         if(obj.attr("data-targetWidth"))
+             targetWidth = obj.attr("data-targetWidth");
+         if(obj.attr("data-targetHeight"))
+             targetHeight = obj.attr("data-targetHeight");
+         if(obj.attr("data-viewWidth"))
+             viewWidth = obj.attr("data-viewWidth");
+         if(obj.attr("data-viewHeight"))
+             viewHeight = obj.attr("data-viewHeight");
+                 
+         //calculate appropriate scaling based on width.                 
          var scale_w = (options.viewWidth / options.targetWidth);
          var scale_h = (options.viewHeight / options.targetHeight);
          var scale_f = 1;
@@ -60,6 +70,10 @@
              var triggerType = event.data.triggerType;
              var obj = event.data.target;
              var href = event.data.href;
+             if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
+{
+    href = href.replace('/#', "#");
+}
              var s = event.data.scale;
              
              if( (triggerType == 'click') && ($('#' + preview_id).length == 0) ) {
@@ -98,10 +112,23 @@
              }
              
              //hover on 
-             $('body,html').addClass('stop-scrolling');
-             $('body').append('<div id="livepreview_dialog" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><iframe id="livepreview_iframe" src="' + href + '" style="height:' + options.targetHeight + 'px; width:' + options.targetWidth + 'px;-moz-transform: scale('+ s + ');-moz-transform-origin: 0 0;-o-transform: scale('+ s + ');-o-transform-origin: 0 0;-webkit-transform: scale('+ s + ');-webkit-transform-origin: 0 0;-ms-transform: scale(' + s + ',' + s + ');-ms-transform-origin: 0 0;"></iframe></div></div>');
+             disableScrolling();
+             $('body').append('<div id="'+ preview_id +'" class="' + currentPos + '" style="display:none; padding:0px; left: ' + leftpos + 'px; top:' + toppos + 'px; width: ' + options.viewWidth + 'px; height: ' + options.viewHeight + 'px"><div class="livepreview-container" style="overflow:hidden; width: ' + (options.viewWidth - 10) + 'px; height: ' + (options.viewHeight -10) + 'px"><iframe id="livepreview_iframe" src="' + href + '" style="height:' + options.targetHeight + 'px; width:' + options.targetWidth + 'px;-moz-transform: scale('+ s + ');-moz-transform-origin: 0 0;-o-transform: scale('+ s + ');-o-transform-origin: 0 0;-webkit-transform: scale('+ s + ');-webkit-transform-origin: 0 0;"></iframe></div></div>');
              $('#' + preview_id).fadeIn(100);
          };
+
+function disableScrolling(){
+    var x=window.scrollX || window.pageXOffset || document.body.scrollLeft;
+    var y=window.scrollY || window.pageYOffset || document.body.scrollTop;
+    window.onscroll=function(){
+        window.scrollTo(x, y);
+        
+    };
+}
+
+function enableScrolling(){
+    window.onscroll=function(){};
+}
 
          return this.each(function() {
             var o = options;
@@ -117,6 +144,7 @@
             if(triggerType != 'click') {
                 triggerType = 'mouseenter';
                 obj.on('click', function() {
+                    enableScrolling();      
                     $('#' + preview_id).remove();
                 });
             }
@@ -124,7 +152,7 @@
             obj.on(triggerType, null, { triggerType: triggerType, target: obj, href: href, scale: s }, showPreview);
             obj.on('mouseleave', function() {
                         
-                $('body,html').removeClass('stop-scrolling');
+                enableScrolling();
                 $('#' + preview_id).remove();
             });
 
