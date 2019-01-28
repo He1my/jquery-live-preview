@@ -61,10 +61,10 @@
     <li><strong>data-position</strong> :: overrides the position placement setting</li>
     <li><strong>data-scale</strong> :: overrides the scale setting</li>
     <li><strong>data-preview-url</strong> :: overrides url to show in the preview instead of the href attr</li>
-    <li><strong>data-viewWidth</strong> :: overrides the preview dialog width</li>
-    <li><strong>data-viewHeight</strong> :: overrides the preview dialog height</li>
-    <li><strong>data-targetWidth</strong> :: overrides the viewport size width of the site you are previewing</li>
-    <li><strong>data-targetHeight</strong> :: overrides the viewport size height of the site you are previewing</li>    
+    <li><strong>data-view-width</strong> :: overrides the preview dialog width</li>
+    <li><strong>data-view-height</strong> :: overrides the preview dialog height</li>
+    <li><strong>data-target-width</strong> :: overrides the viewport size width of the site you are previewing</li>
+    <li><strong>data-target-height</strong> :: overrides the viewport size height of the site you are previewing</li>    
 </ul>
 <p>Example:</p>
 <pre><code>&#60;a href="http://www.cnn.com" class="livepreview" data-offset="20" data-position="left" &#62;Hover over this link&#60;/a&#62;</pre></code>
